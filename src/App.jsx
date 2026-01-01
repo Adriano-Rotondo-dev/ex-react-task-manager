@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import TaskList from "./pages/TaskList";
+import AddTask from "./pages/AddTask";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <h1>Hello Task</h1>
-      <p>This is my Task</p>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<TaskList />} />
+        <Route path="/add" element={<AddTask />} />
+      </Routes>
     </>
   );
 }
