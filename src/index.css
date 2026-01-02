@@ -1,0 +1,13 @@
+.table td.todo {
+  /* per sovrascrivere bootstrap */
+  background-color: rgb(199, 45, 45);
+  color: white;
+}
+td.doing {
+  background-color: rgb(221, 177, 55);
+  color: white;
+}
+td.done {
+  background-color: rgb(42, 173, 42);
+  color: white;
+}

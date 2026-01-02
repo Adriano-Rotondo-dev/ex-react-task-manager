@@ -1,6 +1,7 @@
 //elenco delle task
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+import TaskRow from "../components/TaskRow";
 
 export default function TaskList() {
   const { tasks } = useContext(GlobalContext);
@@ -9,19 +10,21 @@ export default function TaskList() {
   return (
     <div className="text-center flex-column justify-content p-3">
       <h1>Task list</h1>
-      {/* Task list - placeholder */}
-      <ul className="list-group">
-        {tasks.map((task, index) => (
-          <li
-            key={task.id}
-            className={`list-group-item ${
-              index % 2 === 0 ? "bg-light text-dark" : "bg-dark text-white"
-            }`}
-          >
-            {task.title}
-          </li>
-        ))}
-      </ul>
+
+      <table className="table table-striped table-bordered text-center">
+        <thead className="table-dark">
+          <tr>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Data di Creazione</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map((task) => (
+            <TaskRow key={task.id} task={task} />
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
