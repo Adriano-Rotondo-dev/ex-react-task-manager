@@ -14,13 +14,25 @@ export default function AddTask() {
     return "";
   }, [taskTitle]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (taskTitleError) return;
+    const newTask = {
+      title: taskTitle.trim,
+      description: descriptionRef.current.value,
+      status: statusRef.current.value,
+    };
+
+    console.log("Task aggiunta: ", newTask);
+  };
+
   return (
     <div className="container py-4">
       <h1 className="text-center mb-4">Add Task</h1>
 
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <form className="needs-validation" noValidate>
+          <form onSubmit={handleSubmit} className="needs-validation" noValidate>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
                 Nome Task
@@ -67,7 +79,11 @@ export default function AddTask() {
                 );
               })}
             </select>
-            <button className="btn btn-primary w-100 my-3" type="submit">
+            <button
+              type="submit"
+              className="btn btn-primary w-100 my-3"
+              disabled={taskTitleError}
+            >
               Aggiungi Task
             </button>
           </form>
