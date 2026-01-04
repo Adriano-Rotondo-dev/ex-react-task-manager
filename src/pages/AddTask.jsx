@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo, useContext } from "react";
 import { GlobalContext } from "../context/GlobalContext";
+import Toast from "../components/Toast";
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
@@ -7,6 +8,7 @@ export default function AddTask() {
   const { addTask } = useContext(GlobalContext);
 
   const [taskTitle, setTaskTitle] = useState("");
+  const [toast, setToast] = useState({ message: "", type: "success" });
   const descriptionRef = useRef();
   const statusRef = useRef();
 
@@ -27,20 +29,32 @@ export default function AddTask() {
     };
     try {
       await addTask(newTask);
-      alert(`Task Creata con Successo : ", ${newTask.title}`);
+      setToast({
+        message: `Task ${newTask.title} creata con successo.`,
+        type: "success",
+      });
+      // alert(`Task Creata con Successo : ${newTask.title}`);
       setTaskTitle("");
       descriptionRef.current.value = "";
       statusRef.current.value = "To do";
     } catch (error) {
-      alert(error.message);
+      setToast({
+        message: error.message,
+        type: "danger",
+      });
+      // alert(error.message);
     }
 
-    console.log("Task aggiunta: ", newTask);
+    // console.log("Task aggiunta: ", newTask);
   };
 
   return (
     <div className="container py-4">
       <h1 className="text-center mb-4">Add Task</h1>
+      <Toast
+        toast={toast}
+        onClose={() => setToast({ message: "", type: "success" })}
+      />
 
       <div className="row justify-content-center">
         <div className="col-md-6">
@@ -94,7 +108,7 @@ export default function AddTask() {
             <button
               type="submit"
               className="btn btn-primary w-100 my-3"
-              disabled={taskTitleError}
+              disabled={!!taskTitleError}
             >
               Aggiungi Task
             </button>
