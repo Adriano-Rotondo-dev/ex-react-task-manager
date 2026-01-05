@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import Modal from "../components/Modal";
 import { GlobalContext } from "../context/GlobalContext";
 
 export default function TaskDetail() {
@@ -9,6 +10,9 @@ export default function TaskDetail() {
   const { tasks, removeTask } = useContext(GlobalContext);
 
   const task = tasks.find((task) => task.id === parseInt(id));
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   if (!task) {
     return (
       <div className="container vh-10 d-flex justify-content-center text-danger">
@@ -56,9 +60,21 @@ export default function TaskDetail() {
         </div>
       </div>
       <div className="row justify-content-center">
-        <button className="btn btn-danger w-25 mt-3" onClick={handleDelete}>
+        <button
+          className="btn btn-danger w-25 mt-3"
+          onClick={() => setShowDeleteModal(true)}
+        >
           Elimina Task
         </button>
+
+        <Modal
+          title="Elimina la task scelta?"
+          content={<p>Vuoi eliminare questa task?</p>}
+          show={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={handleDelete}
+          confirmText="Elimina la task"
+        />
       </div>
     </div>
   );
