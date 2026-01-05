@@ -10,7 +10,7 @@ const TaskRow = memo(({ task }) => {
   return (
     <tr>
       <td>
-        <Link to={`/task/${task.id}`}>{task.title}</Link>
+        <Link to={`/tasks/${task.id}`}>{task.title}</Link>
       </td>
       <td className={statusClass}>{task.status}</td>
       <td>{new Date(task.createdAt).toLocaleDateString()}</td>
